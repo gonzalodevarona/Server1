@@ -19,7 +19,7 @@ public class Servidor {
 		try {
 			ServerSocket server = new ServerSocket(5000);
 			System.out.println("");
-			System.out.println("Esperando conexión...");
+			System.out.println("Esperando conexion...");
 			System.out.println("");
 			Socket socket = server.accept();
 			System.out.println("CONECTADO");
@@ -32,22 +32,28 @@ public class Servidor {
 				
 				
 			while(true){
+				String line = bReader.readLine();
+				int test =0;
+				if (line.getBytes().length < 1000) {
+					
+					line = line.trim();
+					test = Integer.parseInt(line);
+				}
 				
-				String line = bReader.readLine();	
-				System.out.println("Usuario escribio: "+line);
+				
 				InetAddress address = InetAddress.getLocalHost();
 				
 				String answer = "";
 				
 				
-				switch(line){
-					case "ip":
+				switch(test){
+					case 1:
 						answer = "La direccion IP del servidor es: "+address.getHostAddress()+" \n";
-						bWriter.write(answer);
-						bWriter.flush();
+						
+						System.out.println("Usuario consulto: IP del servidor");
 						break;
 						
-					case "interface":
+					case 2:
 						Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 				        while (interfaces.hasMoreElements()) {
 				            NetworkInterface iface = interfaces.nextElement();
@@ -56,28 +62,29 @@ public class Servidor {
 				            	answer+= iface.getDisplayName()+" \n";
 				        }
 				        
-				        bWriter.write(answer);
-						bWriter.flush();
+				        
+						System.out.println("Usuario consulto: Interfaces online del servidor");
 						break;
 						
 						
-					case "hora":
+					case 3:
 						Calendar cal = Calendar.getInstance();
 						answer = "La hora del servidor es: "+cal.getTime().toString()+" \n";
 						
-						bWriter.write(answer);
-						bWriter.flush();
+						
+						System.out.println("Usuario consulto: Hora local del servidor");
 						break;
 						
 
 					default:
 						answer = line;
 						
-						bWriter.write(answer);
-						bWriter.flush();
+						
 						break;
 
 				}
+				bWriter.write(answer);
+				bWriter.flush();
 				
 				
 					
