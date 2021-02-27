@@ -77,7 +77,7 @@ public class Servidor {
 						
 
 					default:
-						answer = line;
+						answer =line +" \n";
 						
 						
 						break;
